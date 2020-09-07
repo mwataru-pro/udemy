@@ -19,19 +19,18 @@
 <h2>Practice</h2>
 <pre>
 <?php 
-try {
-$db = new PDO('mysql:dbname=mydb;host=localhost;charset=utf8','root','root');
+require('dbconnect.php');
 
-$statement = $db->prepare('INSERT INTO memos SET memo=?, created_at=NOW()');
-$statement->execute(array($_POST['memo']));
-echo 'メッセージが登録されました';
-} catch(PODException $e) {
-  echo 'DB接続エラー： ' . $e->getMessage();
+if (isset($_REQUEST['id']) && is_numeric($_REQUEST['id'])) {
+$id = $_REQUEST['id'];
+
+$statement = $db->prepare('DELETE FROM memos WHERE id=?');
+$statement->execute(array($id));
 }
-
-
 ?>
+メモを削除しました
 </pre>
+<p><a href="index.php">戻る</a></p>
 </main>
 </body>    
 </html>

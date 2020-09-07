@@ -19,19 +19,14 @@
 <h2>Practice</h2>
 <pre>
 <?php 
-try {
-$db = new PDO('mysql:dbname=mydb;host=localhost;charset=utf8','root','root');
+require('dbconnect.php');
 
-$statement = $db->prepare('INSERT INTO memos SET memo=?, created_at=NOW()');
-$statement->execute(array($_POST['memo']));
-echo 'メッセージが登録されました';
-} catch(PODException $e) {
-  echo 'DB接続エラー： ' . $e->getMessage();
-}
-
-
+$statement = $db->prepare('UPDATE memos SET memo=? WHERE id=?');
+$statement->execute(array($_POST['memo'], $_POST['id']));
 ?>
+<p>メモの内容を変更しました</p>
 </pre>
+<p><a href="index.php">戻る</a></p>
 </main>
 </body>    
 </html>
